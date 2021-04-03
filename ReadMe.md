@@ -8,7 +8,7 @@
 
 您可以用pip安装requests库：`pip install requests`
 
-**config文件格式说明**
+### config文件格式说明
 
 - 第一行：起始遍历的索引编号，通常可以通过上一期报纸答案的网址得到。如网址`https://www.xyybs.com/index.php?m=wap&a=show&ewm=1&catid=152&id=51592`，索引为`51592`。
 - 第二行：搜索项目关键字，例如`高二江苏(N)B版`
