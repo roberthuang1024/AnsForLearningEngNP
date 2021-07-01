@@ -27,8 +27,7 @@ except FileNotFoundError:
 
 indexCode = int(config[0])
 keyword = config[1]
-
-addMode = 1
+addMode = int(config[2])
 
 print("正在查找，请稍等...")
 
@@ -36,7 +35,7 @@ while True:
     # print("提取："+str(indexCode))
     # 提取网页html
     try:
-        htmlFile = requests.get('https://www.xyybs.com/index.php?m=wap&a=show&ewm=1&catid=152&id=' +
+        htmlFile = requests.get('https://www.xyybs.com/index.php?m=wap&a=show&catid=145&id=' +
                                 str(indexCode) +
                                 '.html')
     except ConnectionError:
@@ -56,8 +55,13 @@ while True:
     except ValueError:
         webTitle = 'none'
 
+    if '请在报纸出版日期日之后访问' in htmlTxt:
+        print("该报纸答案尚未出版!")
+        input()
+        sys.exit()
+
     # 网页标题是否包含关键字
-    if keyword in webTitle:
+    elif keyword in webTitle:
         print('你想要 "' + webTitle + '" 吗？' +
               ' (ID: ' + str(indexCode) + ')')
         print('【0】下载该答案    【1】寻找下一个    【2】寻找上一个')
@@ -78,7 +82,9 @@ while True:
 
                 # 更新配置文件
                 open(localPath+"config.txt", 'w',
-                     encoding='UTF-8').write(str(indexCode)+'\n'+keyword)
+                     encoding='UTF-8').write(str(indexCode)+'\n' +
+                                             keyword+'\n' +
+                                             str(addMode))
 
                 if input("是否继续搜索？【0/1】") == '0':
                     break
